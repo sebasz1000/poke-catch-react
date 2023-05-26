@@ -1,0 +1,30 @@
+.pokemon-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2em
+}
+
+.pokemon-list li{
+  display: flex;
+  flex-direction: column;
+  gap: 1.3em;
+  
+}
+
+.pokemon-list header{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+}
+.pokemon-list li header h3{
+  text-transform: capitalize;
+}
+.pokemon-list li h3, .pokemon-list li small, .pokemon-list li img{
+  margin: 0 !important;
+}
+
+.btn-catch{
+  background-color: green;
+}
