@@ -1,27 +1,11 @@
 import '../styles/filters.css'
-import { useFilters, usePokemons } from '../hooks'
-import { useEffect, useId, useRef } from 'react'
+import { useFilters } from '../hooks'
+import { useId } from 'react'
 import { Loader } from './Loader'
 
 export function Filters() {
 
-  const { pokemons } = usePokemons()
-  const { handleInputChange, currentFilters, getFiltersInfo, filtersInfo } = useFilters()
-  let firstTime = useRef(true)
-
-
-  useEffect(() => {
-
-    //console.log(firstTime.current)
-
-    if (!firstTime.current)
-      return
-
-    getFiltersInfo(pokemons)
-    firstTime.current = pokemons.length === 0
-
-  }, [pokemons]);
-
+  const { handleInputChange, currentFilters, filtersInfo } = useFilters()
   const { types, weight } = filtersInfo
 
 

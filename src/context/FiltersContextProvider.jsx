@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FiltersContext } from "./FiltersContext"
 
 export function FiltersContextProvider({ children }) {
+
   const [currentFilters, setCurrentFilters] = useState({
     weight: 0,
     type: 'all'

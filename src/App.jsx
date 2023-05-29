@@ -1,10 +1,6 @@
-import { Pokemons, Loader, ErrorMessage, Filters } from './components'
-import { usePokemons } from './hooks'
+import { Pokemons, Filters } from './components'
 
 export function App() {
-
-  const { pokemons, isLoading, error } = usePokemons()
-
   return (
     <div className="page">
       <header>
@@ -12,16 +8,7 @@ export function App() {
         <Filters />
       </header>
       <main>
-        {
-          error
-            ? <ErrorMessage error={error} />
-            : null
-        }
-        {
-          !isLoading
-            ? <Pokemons pokemons={pokemons} />
-            : <Loader size={80} />
-        }
+        <Pokemons />
       </main>
     </div>
   )

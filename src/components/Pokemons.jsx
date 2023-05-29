@@ -1,11 +1,25 @@
+import { useFilters, usePokemons } from '../hooks'
 import '../styles/list.css'
-export function Pokemons({ pokemons }) {
-  const hasPokemons = pokemons.length > 0
-  return (
-    hasPokemons
-      ? <List items={pokemons} />
-      : <NoResults />
-  )
+import { ErrorMessage } from './ErrorMessage'
+import { Loader } from './Loader'
+export function Pokemons() {
+  const { error, isLoading } = usePokemons()
+  const { filteredPokemons } = useFilters()
+  const hasPokemons = filteredPokemons.length > 0
+
+  if (isLoading) {
+    return <Loader size={80} />
+  }
+
+  if (error) {
+    return <ErrorMessage error={error} />
+  }
+
+  if (hasPokemons) {
+    return <List items={filteredPokemons} />
+  } else {
+    <NoResults />
+  }
 }
 
 function List({ items }) {
