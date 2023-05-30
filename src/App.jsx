@@ -1,4 +1,5 @@
 import { Pokemons, Filters } from './components'
+import { Cart } from './components'
 
 export function App() {
   return (
@@ -10,6 +11,7 @@ export function App() {
       <main>
         <Pokemons />
       </main>
+      <Cart />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useFilters, usePokemons } from '../hooks'
+import { useCart, useFilters, usePokemons } from '../hooks'
 import '../styles/list.css'
 import { ErrorMessage } from './ErrorMessage'
 import { Loader } from './Loader'
@@ -23,6 +23,20 @@ export function Pokemons() {
 }
 
 function List({ items }) {
+  const { isOnCart, removeFromCart, addToCart, getItemQuantity } = useCart()
+
+
+  const getBtns = (item) => {
+    return isOnCart(item)
+      ? <button className='btn-free' onClick={() => removeFromCart(item)} >Let free!</button>
+      : <button className='btn-catch' onClick={() => addToCart(item)}>Catch!</button>
+  }
+
+  const getQuantityBadge = (item) => {
+    return isOnCart(item)
+      ? <span className='quantity-badge'>{getItemQuantity(item)}</span>
+      : null
+  }
   return (
     <ul className='pokemon-list'>
       {
@@ -30,12 +44,13 @@ function List({ items }) {
           const { name, id, weight, sprites } = item
           return (
             <li key={id}>
+              {getQuantityBadge(item)}
               <img src={sprites.other.home.front_default} alt={`${name} image thumbnail`} />
               <header>
                 <h3>{name}</h3>
                 <small>({weight}kg)</small>
               </header>
-              <button className='btn-catch'>Catch!</button>
+              {getBtns(item)}
             </li>
           )
         })

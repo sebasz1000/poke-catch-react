@@ -1,4 +1,6 @@
+export * from './Cart'
 export * from './ErrorMessage'
 export * from './Filters'
+export * from './Icons'
 export * from './Loader'
 export * from './Pokemons'
