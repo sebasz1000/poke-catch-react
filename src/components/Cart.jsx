@@ -4,7 +4,7 @@ import { useCart } from "../hooks";
 import '../styles/cart.css'
 export function Cart() {
   const cartBtnId = useId()
-  const { cart, removeAllCart } = useCart()
+  const { cart, clearCart } = useCart()
   return (
     <>
       <label htmlFor={cartBtnId} className="cart-btn">
@@ -17,7 +17,7 @@ export function Cart() {
             cart.map(item => <CartItem key={item.id} item={item} />)
           }
         </ul>
-        <button className="removeAllBtn" onClick={removeAllCart}>Free all pokemons!</button>
+        <button className="removeAllBtn" onClick={clearCart}>Free all pokemons!</button>
       </aside>
     </>
   )
