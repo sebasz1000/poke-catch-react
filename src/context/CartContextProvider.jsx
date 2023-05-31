@@ -3,8 +3,7 @@ import { CartContext } from './CartContext'
 import { CART_TYPES } from '../types/cart.types'
 import { cartReducer } from '../reducers/cart.reducer'
 
-const initState = []
-
+const initState = JSON.parse(localStorage.getItem('poke-cart')) || []
 export function CartContextProvider({ children }) {
 
   const [state, dispatch] = useReducer(cartReducer, initState)

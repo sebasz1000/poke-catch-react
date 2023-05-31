@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext"
 export const useCart = () => {
   const context = useContext(CartContext); 
@@ -8,6 +8,9 @@ export const useCart = () => {
   if(!context)
     throw new Error('useCart must be withing a cart context ')
   
+  useEffect(() => {
+    localStorage.setItem('poke-cart', JSON.stringify(cart))
+  }, [cart])
 
   const isOnCart = (item) => {
     const { id } = item
