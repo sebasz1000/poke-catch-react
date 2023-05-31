@@ -53,8 +53,6 @@ export const useFilters = () => {
   }, [])
   
   
-
-  
   const filterPokemons = useCallback(() => {
     return pokemons.filter( pokemon => {
       const pokemonsTypesNames = pokemon.types.map( ({type }) => type.name)
