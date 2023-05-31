@@ -3,10 +3,12 @@ import { CartContext } from "../context/CartContext"
 export const useCart = () => {
   const context = useContext(CartContext); 
   
+  if(!context)
+  throw new Error('useCart must be withing a cart context ')
+  
   const {cart, addToCart, removeFromCart, clearCart, addItemQuantity, removeItemQuantity} = context
   
-  if(!context)
-    throw new Error('useCart must be withing a cart context ')
+
   
   useEffect(() => {
     localStorage.setItem('poke-cart', JSON.stringify(cart))

@@ -6,13 +6,13 @@ export const useFilters = () => {
   
   const { pokemons, error } = usePokemons()
   const context = useContext(FiltersContext)
-  const {currentFilters, setCurrentFilters, filtersInfo, setFiltersInfo } = context
-  let firstTime = useRef(true)
-
   
   if(!context){
     throw new Error('useFilters must be withing a Context Provider')  
   }
+  
+  const {currentFilters, setCurrentFilters, filtersInfo, setFiltersInfo } = context
+  let firstTime = useRef(true)
   
   useEffect(() => {
 
