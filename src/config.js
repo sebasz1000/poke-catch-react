@@ -1,12 +1,9 @@
 const API_KEY = "https://pokeapi.co/api/v2/pokemon"
 
-export function getApiUrl( ){
+export function getApiUrl(query_params){
   
-  if(!arguments)
+  if(!query_params)
     return API_KEY
-  
-  const argsArray = [...arguments]
-  const query_params =  argsArray.join('&')
   
   return `${API_KEY}?${query_params}`
     

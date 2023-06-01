@@ -41,11 +41,11 @@ function List({ items }) {
     <ul className='pokemon-list'>
       {
         items.map(item => {
-          const { name, id, weight, sprites } = item
+          const { name, id, weight, image } = item
           return (
             <li key={id}>
               {getQuantityBadge(item)}
-              <img src={sprites.other.home.front_default} alt={`${name} image thumbnail`} />
+              <img src={image} alt={`${name} image thumbnail`} />
               <header>
                 <h3>{name}</h3>
                 <small>({weight}kg)</small>
