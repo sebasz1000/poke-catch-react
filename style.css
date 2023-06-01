@@ -848,6 +848,9 @@ textarea:focus {
   }
 }
 
+input[hidden]{
+  display: none;
+}
 input[type='checkbox']:active,
 input[type='radio']:active,
 input[type='submit']:active,

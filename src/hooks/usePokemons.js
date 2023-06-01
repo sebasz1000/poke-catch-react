@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { fetchPokemons } from '../services/fetch-pokemons'
+import { getApiUrl } from '../config'
 
 export const usePokemons = () => {
-  const API_URL = 'https://pokeapi.co/api/v2/pokemon?limit=151'
+  const API_URL = getApiUrl('limit=151')
+  console.log(API_URL)
   const [pokemons, setPokemons] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -31,5 +33,5 @@ export const usePokemons = () => {
     isLoading, 
     error
   }
-
+ 
 }
