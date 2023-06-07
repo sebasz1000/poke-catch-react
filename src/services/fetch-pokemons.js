@@ -1,5 +1,5 @@
 import { getApiUrl } from '../config'
-
+import { Pokemon } from '../models/pokemon.model'
 
 export const fetchPokemons = async ({ limit = 151, offset = 0}) => {
   
@@ -27,16 +27,9 @@ export const fetchPokemons = async ({ limit = 151, offset = 0}) => {
     const pokemons = await Promise.all(pokemonsPromises)
     //Disable comment below to check api available properties
     //console.log(pokemons) 
-    const mappedPokemons = pokemons.map( ({ name, id, weight, types, sprites }) => ({
-      id, 
-      name,
-      weight,
-      types, 
-      image: sprites.other.home.front_default
-    }))
-    
-    return mappedPokemons
-    
+
+    return pokemons.map(Pokemon)
+        
   } catch (e) {
     return e
   }

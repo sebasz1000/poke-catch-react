@@ -12,16 +12,9 @@ export const useFilters = () => {
   }
   
   const {currentFilters, setCurrentFilters, filtersInfo, setFiltersInfo } = context
-  let firstTime = useRef(true)
   
   useEffect(() => {
-
-    if (!firstTime.current)
-      return
-
     getFiltersInfo(pokemons)
-    firstTime.current = pokemons.length === 0
-
   }, [pokemons]);
 
   
@@ -43,13 +36,15 @@ export const useFilters = () => {
     
     const uniqueTypes =  new Set(types)
     
-    setFiltersInfo({
+    setFiltersInfo( prevState => ({
+      ...prevState,
       types: [ 'all',  ...uniqueTypes],
       weight: {
         min: Math.min(...weights),
         max: Math.max(...weights)
       }
     })
+    )
   }, [])
   
   

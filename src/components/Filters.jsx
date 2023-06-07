@@ -6,12 +6,12 @@ import { Loader } from './Loader'
 export function Filters() {
 
   const { handleInputChange, currentFilters, filtersInfo } = useFilters()
-  const { types, weight } = filtersInfo
-
+  const { types, weight, generations } = filtersInfo
 
   return (
     <div className="filters-box">
       <WeightFilter min={weight.min} max={weight.max} onChange={handleInputChange} value={currentFilters.weight} />
+      <GenerationsFilter generations={generations} onChange={handleInputChange} value={currentFilters.generation} />
       <TypesFilter types={types} onChange={handleInputChange} value={currentFilters.type} />
     </div>
   )
@@ -54,6 +54,25 @@ function WeightFilter({ min, max, onChange, value }) {
             value={value} />
           <small><strong>{value}</strong>Kg</small>
         </div>
+      </div>)
+      : <Loader size={40} />
+  )
+}
+
+function GenerationsFilter({ generations, value, onChange }) {
+  const generationInputId = useId()
+  const hasGenerations = generations.length > 0
+  const getSelectOpts = () => {
+    return generations.map(({ name, id }) => (<option value={name} key={id}>{name}</option>))
+  }
+
+  return (
+    hasGenerations
+      ? (<div>
+        <label htmlFor={generationInputId}>Generation</label>
+        <select name="generation" id={generationInputId} onChange={onChange} value={value} >
+          {getSelectOpts()}
+        </select>
       </div>)
       : <Loader size={40} />
   )

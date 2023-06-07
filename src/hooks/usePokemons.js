@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { fetchPokemons } from '../services/fetch-pokemons'
+import { POKEMON_GENERATIONS } from '../types/pokemon-generations.types'
+import { FiltersContext } from '../context/FiltersContext'
 
 
 export const usePokemons = () => {
@@ -7,29 +9,23 @@ export const usePokemons = () => {
   const [pokemons, setPokemons] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-
-  // const getPokemons = useCallback(async () => {
-  //   try {
-  //     setIsLoading(true)
-  //     setError(null)
-  //     const pokes = await fetchPokemons()
-  //     setPokemons(pokes)
-  //   } catch (e) {
-  //     setError(e)
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // },[])
-
+  const { currentFilters } = useContext(FiltersContext)
   useEffect(() => {
     setIsLoading(true)
     setError(null)
-    fetchPokemons({ limit: 151, offset: 0 })
+
+    const generation_type = POKEMON_GENERATIONS.find( type => type.name.toLocaleLowerCase() === currentFilters.generation.toLocaleLowerCase() )
+    
+    const params = {
+      limit: generation_type.limit,
+      offset: generation_type.offset  
+    }
+    
+    fetchPokemons(params)
       .then( setPokemons )
       .catch( (e) => setError(e) )
       .finally(() => setIsLoading(false) )
-
-  }, [])
+  }, [currentFilters.generation])
   
   
   return {

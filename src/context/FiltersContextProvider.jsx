@@ -1,18 +1,22 @@
 import { useState } from 'react'
 import { FiltersContext } from "./FiltersContext"
+import { POKEMON_GENERATIONS } from '../types/pokemon-generations.types'
 
 export function FiltersContextProvider({ children }) {
 
   const [currentFilters, setCurrentFilters] = useState({
     weight: 0,
-    type: 'all'
+    type: 'all',
+    generation: POKEMON_GENERATIONS[0].name
   })
+
   const [filtersInfo, setFiltersInfo] = useState({
     weight: {
       min: 0,
       max: undefined
     },
-    types: []
+    types: [],
+    generations: POKEMON_GENERATIONS
   })
 
   return (

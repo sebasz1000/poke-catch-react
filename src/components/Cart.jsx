@@ -1,17 +1,18 @@
-import { useId } from "react";
+import { useId, useEffect, useRef } from "react";
 import { CartIcon } from "./Icons";
 import { useCart } from "../hooks";
 import '../styles/cart.css'
 export function Cart() {
   const cartBtnId = useId()
   const { cart, clearCart } = useCart()
+
   return (
     <>
       <label htmlFor={cartBtnId} className="cart-btn">
         <CartIcon />
       </label>
       <input type="checkbox" id={cartBtnId} hidden />
-      <aside className="cart">
+      <aside className='cart' >
         <ul>
           {
             cart.map(item => <CartItem key={item.id} item={item} />)
@@ -24,12 +25,12 @@ export function Cart() {
 }
 
 function CartItem({ item }) {
-  const { name, weight, sprites, quantity } = item
+  const { name, weight, image, quantity } = item
   const { addItemQuantity, removeItemQuantity } = useCart()
 
   return (
     <li>
-      <img src={sprites.other.home.front_default} alt={name} />
+      <img src={image} alt={name} />
       <header>
         <h3 className="m-0">{name}</h3>
         <small>({weight}kg)</small>
