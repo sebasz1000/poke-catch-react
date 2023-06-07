@@ -1,10 +1,10 @@
 export const POKEMON_GENERATIONS = [
-  {
+  /*{
     id: 0,
     name: 'All',
     limit: 905, //1010 with IX Generation included
     offset: 0,
-  },
+  },*/
   {
     id: 1,
     name: 'First (I)',

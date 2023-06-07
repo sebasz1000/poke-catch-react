@@ -1,5 +1,6 @@
-import { useCart, useFilters, usePokemons } from '../hooks'
 import '../styles/list.css'
+import { useState } from 'react'
+import { useCart, useFilters, usePokemons } from '../hooks'
 import { ErrorMessage } from './ErrorMessage'
 import { Loader } from './Loader'
 export function Pokemons() {
@@ -23,39 +24,57 @@ export function Pokemons() {
 }
 
 function List({ items }) {
+  return (
+    <ul className='pokemon-list'>
+      {
+        items.map(item => <ListItem item={item} key={item.id} />)
+      }
+    </ul>
+  )
+}
+
+function ListItem({ item }) {
+
   const { isOnCart, removeFromCart, addToCart, getItemQuantity } = useCart()
-
-
-  const getBtns = (item) => {
-    return isOnCart(item)
-      ? <button className='btn-free' onClick={() => removeFromCart(item)} >Let free!</button>
-      : <button className='btn-catch' onClick={() => addToCart(item)}>Catch!</button>
-  }
+  const [imageIsLoading, setImageIsLoading] = useState(true)
+  const { name, weight, image } = item
 
   const getQuantityBadge = (item) => {
     return isOnCart(item)
       ? <span className='quantity-badge'>{getItemQuantity(item)}</span>
       : null
   }
+
+  const getBtns = (item) => {
+    return isOnCart(item)
+      ? <button className='btn-free mx-auto d-block' onClick={() => removeFromCart(item)} >Let free!</button>
+      : <button className='btn-catch mx-auto d-block' onClick={() => addToCart(item)}>Catch!</button>
+  }
+
   return (
-    <ul className='pokemon-list'>
+    (<li className={`list-item ${imageIsLoading ? 'skeleton' : ''}`} >
+      {getQuantityBadge(item)}
+
+      <img src={image}
+        className='fadeIn'
+        alt={`${name} image thumbnail`}
+        loading="lazy"
+        onLoad={() => setImageIsLoading(false)} />
+      {imageIsLoading ? (<div className='skeleton-image' ></div>) : null}
       {
-        items.map(item => {
-          const { name, id, weight, image } = item
-          return (
-            <li key={id}>
-              {getQuantityBadge(item)}
-              <img src={image} alt={`${name} image thumbnail`} />
-              <header>
-                <h3>{name}</h3>
-                <small>({weight}kg)</small>
-              </header>
-              {getBtns(item)}
-            </li>
-          )
-        })
+        imageIsLoading
+          ? (<header className="skeleton-header"> </header>)
+          : (<header className='fadeIn'>
+            <h3>{name}</h3>
+            <small>({weight}kg)</small>
+          </header>)
       }
-    </ul>
+      {
+        imageIsLoading
+          ? (<div className="skeleton-button"></div>)
+          : (<div className='fadeIn'>{getBtns(item)}</div>)
+      }
+    </li >)
   )
 }
 
