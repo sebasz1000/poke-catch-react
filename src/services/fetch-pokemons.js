@@ -1,5 +1,7 @@
 import { getApiUrl } from '../config'
 import { Pokemon } from '../models/pokemon.model'
+import { FetchError } from '../errors'
+
 
 export const fetchPokemons = async ({ limit = 151, offset = 0}) => {
   
@@ -10,14 +12,14 @@ export const fetchPokemons = async ({ limit = 151, offset = 0}) => {
     const res = await fetch(API_URL)
 
     if (!res.ok)
-      throw new Error('Error fetching pokemons list objects')
+      throw new FetchError('Error fetching pokemons list objects')
 
     const data = await res.json()
     const pokemonsPromises = data.results.map(item => {
       return fetch(item.url)
         .then(res => {
           if (!res.ok)
-            throw new Error('Error fetching pokemon data')
+            throw new FetchError('Error fetching pokemon data')
           return res.json()
         })
         .then(pokemon => pokemon)

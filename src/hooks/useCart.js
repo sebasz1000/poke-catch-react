@@ -1,10 +1,11 @@
 import { useContext, useEffect } from "react";
+import { ContextError } from "../errors";
 import { CartContext } from "../context/CartContext"
 export const useCart = () => {
   const context = useContext(CartContext); 
   
   if(!context)
-  throw new Error('useCart must be withing a cart context ')
+    throw new ContextError('useCart must be withing a cart context ')
   
   const {cart, addToCart, removeFromCart, clearCart, addItemQuantity, removeItemQuantity} = context
   

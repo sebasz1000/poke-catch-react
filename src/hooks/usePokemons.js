@@ -8,8 +8,7 @@ export const usePokemons = () => {
  
   const [pokemons, setPokemons] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const { currentFilters } = useContext(FiltersContext)
+  const { currentFilters, setError, error } = useContext(FiltersContext)
   useEffect(() => {
     setIsLoading(true)
     setError(null)
@@ -27,7 +26,8 @@ export const usePokemons = () => {
       .finally(() => setIsLoading(false) )
   }, [currentFilters.generation])
   
-  
+  //todo: vaalidate if FetchError to retry fetch connection with setTimeout
+  // https://www.youtube.com/watch?v=OhE-mEt37iA  MIDU ERRORS
   return {
     pokemons, 
     isLoading, 

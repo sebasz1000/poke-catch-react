@@ -1,17 +1,18 @@
-import { useContext, useEffect, useRef, useCallback } from 'react'
+import { useContext, useEffect, useCallback } from 'react'
+import { ContextError } from '../errors'
 import { FiltersContext } from '../context/FiltersContext'
 import { usePokemons } from './usePokemons'
 
 export const useFilters = () => {
   
-  const { pokemons, error } = usePokemons()
+  const { pokemons } = usePokemons()
   const context = useContext(FiltersContext)
   
   if(!context){
-    throw new Error('useFilters must be withing a Context Provider')  
+    throw new ContextError('useFilters must be withing a Context Provider')  
   }
   
-  const {currentFilters, setCurrentFilters, filtersInfo, setFiltersInfo } = context
+  const {currentFilters, setCurrentFilters, filtersInfo, setFiltersInfo, error } = context
   
   useEffect(() => {
     getFiltersInfo(pokemons)
@@ -23,7 +24,7 @@ export const useFilters = () => {
     setCurrentFilters(prevState => ({ ...prevState, [name]: value }))
   }
   
-  const getFiltersInfo = useCallback((pokemons) => {
+  const getFiltersInfo = useCallback((pokemons = []) => {
     if( error || pokemons.length === 0 )
       return 
     let types = []
@@ -45,23 +46,29 @@ export const useFilters = () => {
       }
     })
     )
-  }, [])
+  }, [pokemons])
   
   
-  const filterPokemons = useCallback(() => {
-    return pokemons.filter( pokemon => {
+  const filterPokemons = useCallback(( pokemons = []) => {
+    
+    if(pokemons.length === 0)
+      return []
+
+    const filteredPokemons = pokemons.filter( pokemon => {
       const pokemonsTypesNames = pokemon.types.map( ({type }) => type.name)
       return ( (currentFilters.type === 'all' || pokemonsTypesNames.includes(currentFilters.type))
           && (pokemon.weight >= +currentFilters.weight ))
     })
+    
+    return filteredPokemons
+    
   }, [currentFilters, pokemons])
   
-
+  
   return{
     handleInputChange,
-    getFiltersInfo,
     currentFilters,
     filtersInfo,
-    filteredPokemons: filterPokemons()
+    filteredPokemons: error ? [] : filterPokemons(pokemons)
   }
 }

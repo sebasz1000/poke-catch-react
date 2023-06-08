@@ -13,6 +13,7 @@ export function Pokemons() {
   }
 
   if (error) {
+    console.error(error instanceof Error)
     return <ErrorMessage error={error} />
   }
 

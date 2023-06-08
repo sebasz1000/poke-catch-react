@@ -19,12 +19,16 @@ export function FiltersContextProvider({ children }) {
     generations: POKEMON_GENERATIONS
   })
 
+  const [error, setError] = useState(null)
+
   return (
     <FiltersContext.Provider value={{
       currentFilters,
       setCurrentFilters,
       filtersInfo,
-      setFiltersInfo
+      setFiltersInfo,
+      error,
+      setError
     }}>
       {children}
     </FiltersContext.Provider>
