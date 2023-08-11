@@ -1,7 +1,7 @@
 export function ErrorMessage({ error }) {
   return (
     <>
-      <h3>Error fetching pokemons data</h3>
+      <h3>{error.name}</h3>
       <span>error</span>
     </>
   )

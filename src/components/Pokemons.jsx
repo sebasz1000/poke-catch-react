@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useCart, useFilters, usePokemons } from '../hooks'
 import { ErrorMessage } from './ErrorMessage'
 import { Loader } from './Loader'
+
 export function Pokemons() {
   const { error, isLoading } = usePokemons()
   const { filteredPokemons } = useFilters()
@@ -20,7 +21,7 @@ export function Pokemons() {
   if (hasPokemons) {
     return <List items={filteredPokemons} />
   } else {
-    <NoResults />
+    return < NoResults />
   }
 }
 
@@ -80,5 +81,5 @@ function ListItem({ item }) {
 }
 
 function NoResults() {
-  return <h4>There are not pokemons to list</h4>
+  return (<h4 className='text-center'>There are not pokemons to list with these filters</h4>)
 }

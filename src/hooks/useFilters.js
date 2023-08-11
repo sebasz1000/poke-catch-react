@@ -24,15 +24,16 @@ export const useFilters = () => {
     setCurrentFilters(prevState => ({ ...prevState, [name]: value }))
   }
   
+  //Gets Pokemons types and weights to set up filters values dynamically
   const getFiltersInfo = useCallback((pokemons = []) => {
     if( error || pokemons.length === 0 )
       return 
     let types = []
     let weights = []
-    pokemons.forEach( item => {
-      const itemTypesNames = item.types.map( ({type}) => type.name )
-      types = [...types, ...itemTypesNames]
-      weights = [...weights, item.weight ]
+    pokemons.forEach( pokemon => {
+      //const itemTypesNames = item.types.map( ({type}) => type.name )
+      types = [...types, ...pokemon.types]
+      weights = [...weights, pokemon.weight ]
     })
     
     const uniqueTypes =  new Set(types)
@@ -55,9 +56,10 @@ export const useFilters = () => {
       return []
 
     const filteredPokemons = pokemons.filter( pokemon => {
-      const pokemonsTypesNames = pokemon.types.map( ({type }) => type.name)
-      return ( (currentFilters.type === 'all' || pokemonsTypesNames.includes(currentFilters.type))
-          && (pokemon.weight >= +currentFilters.weight ))
+      //const pokemonsTypesNames = pokemon.types.map( ({type}) => type.name)
+      return ( (currentFilters.type === 'all' 
+               || pokemon.types.includes(currentFilters.type))
+               && (pokemon.weight >= +currentFilters.weight ))
     })
     
     return filteredPokemons

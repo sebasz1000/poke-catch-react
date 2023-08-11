@@ -1,4 +1,4 @@
-import { useId, useEffect, useRef } from "react";
+import { useId } from "react";
 import { CartIcon } from "./Icons";
 import { useCart } from "../hooks";
 import '../styles/cart.css'
@@ -18,7 +18,10 @@ export function Cart() {
             cart.map(item => <CartItem key={item.id} item={item} />)
           }
         </ul>
-        <button className="removeAllBtn" onClick={clearCart}>Free all pokemons!</button>
+        <button className="removeAllBtn d-block mx-auto"
+          onClick={clearCart}>
+          Free all pokemons!
+        </button>
       </aside>
     </>
   )
@@ -40,7 +43,9 @@ function CartItem({ item }) {
           {quantity === 1 ? <small>Let free</small> : '-'}
         </button>
         {quantity}
-        <button onClick={() => addItemQuantity(item)}>+</button>
+        <button onClick={() => addItemQuantity(item)}>
+          +
+        </button>
       </div>
     </li>
   )

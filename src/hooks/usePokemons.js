@@ -2,13 +2,19 @@ import { useState, useEffect, useContext } from 'react'
 import { fetchPokemons } from '../services/fetch-pokemons'
 import { POKEMON_GENERATIONS } from '../types/pokemon-generations.types'
 import { FiltersContext } from '../context/FiltersContext'
+import { ContextError } from '../errors'
 
 
 export const usePokemons = () => {
  
   const [pokemons, setPokemons] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const { currentFilters, setError, error } = useContext(FiltersContext)
+  const context = useContext(FiltersContext)
+  
+  if(!context)
+    throw new ContextError('usePokemon should be within a context Provider')
+    
+  const { currentFilters, setError, error } = context
   useEffect(() => {
     setIsLoading(true)
     setError(null)
